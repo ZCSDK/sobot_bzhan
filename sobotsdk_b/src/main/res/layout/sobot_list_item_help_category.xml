@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sobot_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/sobot_item_skill_selector"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <RelativeLayout
+        android:id="@+id/sobot_rl"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/sobot_bg_help_center_item_selector">
+
+        <TextView
+            android:id="@+id/sobot_tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="40dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            tools:text="在线客服的标准收费方式？" />
+
+        <TextView
+            android:id="@+id/sobot_tv_icon"
+            android:layout_width="10dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/sobot_icon_right_arrow" />
+    </RelativeLayout>
+</LinearLayout>

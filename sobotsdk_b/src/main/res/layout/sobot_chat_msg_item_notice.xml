@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sobot_real_ll_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/sobot_DIMEN_48PX"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/sobot_ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="@dimen/sobot_DIMEN_48PX"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="12dp"
+        android:background="#FDF6D7"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/sobot_announcement_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/sobot_announcement_img_icon" />
+
+        <com.sobot.chat.widget.StExpandableTextView
+            android:id="@+id/expand_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="8dp"
+            android:layout_toRightOf="@+id/sobot_announcement_icon">
+
+            <TextView
+                android:id="@+id/expandable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@color/sobot_announcement_title_color"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/expand_collapse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableRight="@drawable/sobot_icon_triangle_selector"
+                android:drawablePadding="3dp"
+                android:gravity="right|bottom"
+                android:text="展开"
+                android:textColor="#F49F63"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </com.sobot.chat.widget.StExpandableTextView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/sobot_reminde_time_Text"
+        style="@style/sobot_center_remind_time" />
+</LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF3FA"
+    android:orientation="vertical">
+
+    <include layout="@layout/sobot_layout_titlebar1" />
+
+    <LinearLayout
+        android:id="@+id/sobot_ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <com.sobot.chat.widget.PagerSlidingTab
+            android:id="@+id/sobot_pst_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:background="@android:color/white" />
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/sobot_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/sobot_ll_completed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="186dp"
+            android:layout_height="186dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="59dp"
+            android:background="@drawable/sobot_icon_completed" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="创建成功"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="47dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="47dp"
+            android:text="我们将会以链接的形式在会话中向你反馈工单处理状态"
+            android:textColor="#888888"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/sobot_tv_completed"
+            android:layout_width="345dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/sobot_normal_btn_bg"
+            android:gravity="center"
+            android:text="完成"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/sobot_tv_ticket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="前往留言记录"
+            android:textColor="#16B0B2"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+</LinearLayout>

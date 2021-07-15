@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_bottom"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginBottom="15dp"
+    android:background="@drawable/sobot_btn_bg_help_center"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/sobot_icon_service"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/sobot_help_center_online_service"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+</LinearLayout>
