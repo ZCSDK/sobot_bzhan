@@ -1,7 +1,9 @@
 package com.sobot.chat.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,8 +16,6 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import androidx.documentfile.provider.DocumentFile;
 
 import com.sobot.chat.activity.base.SobotBaseActivity;
 import com.sobot.chat.adapter.SobotFileListAdapter;
@@ -35,17 +35,22 @@ import com.sobot.chat.utils.FastClickUtils;
 import com.sobot.chat.utils.ImageUtils;
 import com.sobot.chat.utils.LogUtils;
 import com.sobot.chat.utils.MD5Util;
+import com.sobot.chat.utils.MediaFileUtils;
 import com.sobot.chat.utils.ResourceUtils;
 import com.sobot.chat.utils.StringUtils;
 import com.sobot.chat.utils.ToastUtil;
 import com.sobot.chat.utils.ZhiChiConstant;
 import com.sobot.chat.widget.dialog.SobotDialogUtils;
+import com.sobot.chat.widget.dialog.SobotReplySeletFileDialog;
 import com.sobot.chat.widget.dialog.SobotTicketEvaluateDialog;
 import com.sobot.chat.widget.kpswitch.util.KeyboardUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.documentfile.provider.DocumentFile;
 
 public class SobotTicketDetailActivity extends SobotBaseActivity implements SobotTicketEvaluateDialog.SobotTicketEvaluateCallback, View.OnClickListener {
     public static final String INTENT_KEY_UID = "intent_key_uid";
@@ -66,6 +71,7 @@ public class SobotTicketDetailActivity extends SobotBaseActivity implements Sobo
     private Button sobot_btn_submit;
     private List<ZhiChiUploadAppFileModelResult> pic_list = new ArrayList<>();
     private SobotFileListAdapter adapter;
+    private SobotReplySeletFileDialog menuWindow;
 
     /**
      * @param context 应用程序上下文
@@ -205,13 +211,30 @@ public class SobotTicketDetailActivity extends SobotBaseActivity implements Sobo
                     if (!checkStoragePermission()) {
                         return;
                     }
-                    Intent intent = new Intent(SobotTicketDetailActivity.this, SobotChooseFileActivity.class);
-                    startActivityForResult(intent, ZhiChiConstant.REQUEST_COCE_TO_CHOOSE_FILE);
+                    menuWindow = new SobotReplySeletFileDialog(SobotTicketDetailActivity.this, itemsOnClick);
+                    menuWindow.show();
                 }
             }
         });
         adapter.restDataView();
     }
+
+    // 为弹出窗口popupwindow实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener() {
+        public void onClick(View v) {
+            menuWindow.dismiss();
+            if (v.getId() == getResId("btn_take_reply_pic")) {
+                selectPicFromLocal();
+            }
+            if (v.getId() == getResId("btn_pick_reply_video")) {
+                selectVideoFromLocal();
+            }
+            if (v.getId() == getResId("btn_pick_reply_file")) {
+                Intent intent = new Intent(SobotTicketDetailActivity.this, SobotChooseFileActivity.class);
+                startActivityForResult(intent, ZhiChiConstant.REQUEST_COCE_TO_CHOOSE_FILE);
+            }
+        }
+    };
 
 
     @Override
@@ -246,6 +269,48 @@ public class SobotTicketDetailActivity extends SobotBaseActivity implements Sobo
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == Activity.RESULT_OK) {
+                if (requestCode == ZhiChiConstant.REQUEST_CODE_picture) {
+                    if (data != null && data.getData() != null) {
+                        Uri selectedImage = data.getData();
+                        if (selectedImage == null) {
+                            selectedImage = ImageUtils.getUri(data, SobotTicketDetailActivity.this);
+                        }
+                        String path = ImageUtils.getPath(this, selectedImage);
+                        if (MediaFileUtils.isVideoFileType(path)) {
+                            MediaPlayer mp = new MediaPlayer();
+                            try {
+                                mp.setDataSource(this, selectedImage);
+                                mp.prepare();
+                                int videoTime = mp.getDuration();
+                                if (videoTime / 1000 > 15) {
+                                    ToastUtil.showToast(this, getResString("sobot_upload_vodie_length"));
+                                    return;
+                                }
+                                SobotDialogUtils.startProgressDialog(this);
+//                            ChatUtils.sendPicByFilePath(this,path,sendFileListener,false);
+                                String fName = MD5Util.encode(path);
+                                String filePath = null;
+                                try {
+                                    filePath = FileUtil.saveImageFile(this, selectedImage, fName + FileUtil.getFileEndWith(path), path);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    ToastUtil.showToast(this, ResourceUtils.getResString(this, "sobot_pic_type_error"));
+                                    return;
+                                }
+                                sendFileListener.onSuccess(filePath);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            SobotDialogUtils.startProgressDialog(this);
+                            ChatUtils.sendPicByUriPost(this, selectedImage, sendFileListener, false);
+                        }
+                    } else {
+                        ToastUtil.showToast(SobotTicketDetailActivity.this, getResString("sobot_did_not_get_picture_path"));
+                    }
+                }
+            }
             if (data != null) {
                 switch (requestCode) {
                     case ZhiChiConstant.REQUEST_COCE_TO_CHOOSE_FILE:
@@ -288,6 +353,17 @@ public class SobotTicketDetailActivity extends SobotBaseActivity implements Sobo
         }
     }
 
+    private ChatUtils.SobotSendFileListener sendFileListener = new ChatUtils.SobotSendFileListener() {
+        @Override
+        public void onSuccess(String filePath) {
+            uploadFile(new File(filePath), "");
+        }
+
+        @Override
+        public void onError() {
+            SobotDialogUtils.stopProgressDialog(SobotTicketDetailActivity.this);
+        }
+    };
 
     protected void uploadFile(final File selectedFile, final String fileName) {
         if (selectedFile != null && selectedFile.exists()) {

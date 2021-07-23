@@ -407,6 +407,16 @@ public abstract class SobotBaseActivity extends FragmentActivity {
         ChatUtils.openSelectPic(this);
     }
 
+    /**
+     * 从图库获取视频
+     */
+    public void selectVideoFromLocal() {
+        if (!checkStoragePermission()) {
+            return;
+        }
+        ChatUtils.openSelectVedio(this,null);
+    }
+
     private void applyTitleUIConfig(TextView view) {
         if (SobotUIConfig.DEFAULT != SobotUIConfig.sobot_titleTextColor) {
             view.setTextColor(getResources().getColor(SobotUIConfig.sobot_titleTextColor));

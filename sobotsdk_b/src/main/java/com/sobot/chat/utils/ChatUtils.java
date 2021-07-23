@@ -117,6 +117,34 @@ public class ChatUtils {
     }
 
     /**
+     * Fragment打开选择视频界面
+     *
+     * @param act
+     */
+    public static void openSelectVedio(Activity act, Fragment childFragment) {
+        if (act == null) {
+            return;
+        }
+        Intent intent;
+        if (Build.VERSION.SDK_INT < 19) {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("video/*");
+        } else {
+            intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        }
+        try {
+            if (childFragment != null) {
+                childFragment.startActivityForResult(intent, ZhiChiConstant.REQUEST_CODE_picture);
+            } else {
+                act.startActivityForResult(intent, ZhiChiConstant.REQUEST_CODE_picture);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtil.showToast(act.getApplicationContext(), ResourceUtils.getResString(act, "sobot_not_open_album"));
+        }
+    }
+
+    /**
      * activity打开相机
      *
      * @param act

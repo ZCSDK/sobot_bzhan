@@ -50,7 +50,9 @@
     <string name="sobot_unable_transfer_to_customer_service">暂时无法转接人工客服</string>
     <string name="sobot_thank_dialog_hint">谢谢您的反馈＾―＾!</string>
     <string name="sobot_email_dialog_hint">您的邮箱格式错误</string>
+    <string name="sobot_input_email_hint">请输入您的邮箱</string>
     <string name="sobot_phone_dialog_hint">您的手机号码格式错误</string>
+    <string name="sobot_input_phone_hint">请输入您的手机号</string>
     <string name="sobot_leavemsg_success_hint">留言成功!\n我们将尽快联系您</string>
     <string name="sobot_leavemsg_success_tip">您的留言已提交成功</string>
     <string name="sobot_outline_openNewWindows">打开新窗口</string>
@@ -193,5 +195,10 @@
     <string name="sobot_submit_error_tip">提交失败</string>
     <string name="sobot_submit_success_tip">提交成功</string>
     <string name="sobot_preview_see">查看</string>
+
+    <string name="sobot_reply_pic">图片</string>
+    <string name="sobot_reply_video">视频</string>
+    <string name="sobot_reply_file">文件</string>
+    <string name="sobot_upload_vodie_length">上传视频长度不能超过15s</string>
 
 </resources>

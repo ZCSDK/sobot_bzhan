@@ -53,7 +53,7 @@ public class ScreenUtils {
 	public static boolean isMobileNO(String mobiles) {
 
 		Pattern p = Pattern
-				.compile("^(13[0-9]|15[0-9]|17[0135678]|18[0-9]|14[579])[0-9]{8}$");
+				.compile("0?(13|14|15|17|18|19)[0-9]{9}");
 
 		Matcher m = p.matcher(mobiles);
 

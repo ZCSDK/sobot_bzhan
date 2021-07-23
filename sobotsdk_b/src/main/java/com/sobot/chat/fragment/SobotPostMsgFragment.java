@@ -286,45 +286,35 @@ public class SobotPostMsgFragment extends SobotBaseFragment implements View.OnCl
 
         if (mConfig.isEmailShowFlag()) {
             if (mConfig.isEmailFlag()) {
-                if (!TextUtils.isEmpty(sobot_post_email.getText().toString().trim())
-                        && ScreenUtils.isEmail(sobot_post_email.getText().toString().trim())) {
-                    userEamil = sobot_post_email.getText().toString().trim();
-                } else {
-                    showHint(getResString("sobot_email_dialog_hint"), false);
-                    return;
-                }
-            } else {
                 if (!TextUtils.isEmpty(sobot_post_email.getText().toString().trim())) {
-                    String emailStr = sobot_post_email.getText().toString().trim();
-                    if (ScreenUtils.isEmail(emailStr)) {
-                        userEamil = sobot_post_email.getText().toString().trim();
-                    } else {
+                    userEamil = sobot_post_email.getText().toString().trim();
+                    if (!ScreenUtils.isEmail(userEamil)) {
                         showHint(getResString("sobot_email_dialog_hint"), false);
                         return;
                     }
+                } else {
+                    showHint(getResString("sobot_input_email_hint"), false);
+                    return;
+                }
+            } else {
+                userEamil = sobot_post_email.getText().toString().trim();
+                if (!TextUtils.isEmpty(userEamil) && !ScreenUtils.isEmail(userEamil)) {
+                    showHint(getResString("sobot_email_dialog_hint"), false);
+                    return;
                 }
             }
         }
 
         if (mConfig.isTelShowFlag()) {
             if (mConfig.isTelFlag()) {
-                if (!TextUtils.isEmpty(sobot_post_phone.getText().toString().trim())
-                        && ScreenUtils.isMobileNO(sobot_post_phone.getText().toString().trim())) {
+                if (!TextUtils.isEmpty(sobot_post_phone.getText().toString().trim())) {
                     userPhone = sobot_post_phone.getText().toString();
                 } else {
-                    showHint(getResString("sobot_phone_dialog_hint"), false);
+                    showHint(getResString("sobot_input_phone_hint"), false);
                     return;
                 }
             } else {
-                if (!TextUtils.isEmpty(sobot_post_phone.getText().toString().trim())) {
-                    String phoneStr = sobot_post_phone.getText().toString().trim();
-                    if (ScreenUtils.isMobileNO(phoneStr)) {
-                        userPhone = phoneStr;
-                    } else {
-                        showHint(getResString("sobot_phone_dialog_hint"), false);
-                        return;
-                    }
-                }
+                userPhone = sobot_post_phone.getText().toString().trim();
             }
         }
 
@@ -437,7 +427,7 @@ public class SobotPostMsgFragment extends SobotBaseFragment implements View.OnCl
                     KeyboardUtil.hideKeyboard(getActivity().getCurrentFocus());
                     Intent intent = new Intent();
                     intent.setAction(SobotPostMsgActivity.SOBOT_ACTION_SHOW_COMPLETED_VIEW);
-                    CommonUtils.sendLocalBroadcast(getContext(),intent);
+                    CommonUtils.sendLocalBroadcast(getContext(), intent);
                 }
             }
 
@@ -526,11 +516,11 @@ public class SobotPostMsgFragment extends SobotBaseFragment implements View.OnCl
     //对msg过滤
     private void msgFilter() {
         if (!TextUtils.isEmpty(mConfig.getMsgTmp())) {
-            mConfig.setMsgTmp(mConfig.getMsgTmp().replace("<br/>", "").replace("\n","").replace("<p>","").replace("</p>",""));
+            mConfig.setMsgTmp(mConfig.getMsgTmp().replace("<br/>", "").replace("\n", "").replace("<p>", "").replace("</p>", ""));
         }
 
         if (!TextUtils.isEmpty(mConfig.getMsgTxt())) {
-            mConfig.setMsgTxt(mConfig.getMsgTxt().replace("<br/>", "").replace("\n","").replace("<p>","").replace("</p>",""));
+            mConfig.setMsgTxt(mConfig.getMsgTxt().replace("<br/>", "").replace("\n", "").replace("<p>", "").replace("</p>", ""));
         }
 
         sobot_et_content.setHint(Html.fromHtml(mConfig.getMsgTmp()));
@@ -681,7 +671,7 @@ public class SobotPostMsgFragment extends SobotBaseFragment implements View.OnCl
             case ZhiChiConstant.WORK_ORDER_CUSTOMER_FIELD_SPINNER_TYPE:
             case ZhiChiConstant.WORK_ORDER_CUSTOMER_FIELD_RADIO_TYPE:
             case ZhiChiConstant.WORK_ORDER_CUSTOMER_FIELD_CHECKBOX_TYPE:
-                StCusFieldPresenter.startSobotCusFieldActivity(getActivity(),SobotPostMsgFragment.this, cusField);
+                StCusFieldPresenter.startSobotCusFieldActivity(getActivity(), SobotPostMsgFragment.this, cusField);
                 break;
             default:
                 break;
