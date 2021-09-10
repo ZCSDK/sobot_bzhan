@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ import com.sobot.chat.utils.HtmlTools;
 import com.sobot.chat.utils.ResourceUtils;
 import com.sobot.chat.utils.ScreenUtils;
 import com.sobot.chat.utils.ZhiChiConstant;
+import com.sobot.chat.widget.StExpandableTextView;
 import com.sobot.chat.widget.attachment.AttachmentView;
 import com.sobot.chat.widget.attachment.FileAttachmentAdapter;
 import com.sobot.chat.widget.attachment.FileTypeConfig;
@@ -190,20 +192,55 @@ public class SobotTicketDetailAdapter extends SobotBaseAdapter<Object> {
 
     class HeadViewHolder extends BaseViewHolder {
         private TextView tv_title;
-        private TextView tv_content;
-
+        private StExpandableTextView tv_exp;
+        private ImageView imageView;
+        private TextView textView;
+        private RecyclerView recyclerView;
         private Context mContext;
+
 
         HeadViewHolder(Context context, View view) {
             super(context, view);
             mContext = context;
             tv_title = (TextView) view.findViewById(ResourceUtils.getResId(context, "sobot_tv_title"));
-            tv_content = (TextView) view.findViewById(ResourceUtils.getResId(context, "sobot_tv_content"));
+            tv_exp = (StExpandableTextView) view.findViewById(ResourceUtils.getResId(context, "sobot_content_fl"));
+            imageView = tv_exp.getImageView();
+            textView = tv_exp.getTextBtn();
+            tv_exp.setOnExpandStateChangeListener(new StExpandableTextView.OnExpandStateChangeListener() {
+                @Override
+                public void onExpandStateChanged(TextView text, boolean isExpanded) {
+                    if (isExpanded) {//展开 sobot_icon_arrow_selector
+                        textView.setText(ResourceUtils.getResString(mContext, "sobot_notice_collapse"));
+//                        imageView.setImageResource(ResourceUtils.getDrawableId(mContext,"sobot_icon_arrow_up"));
+                    } else {
+                        textView.setText(ResourceUtils.getResString(mContext, "sobot_notice_expand"));
+//                        imageView.setImageResource(ResourceUtils.getDrawableId(mContext,"sobot_icon_arrow_dwon"));
+                    }
+
+                }
+            });
+            textView.setText(ResourceUtils.getResString(mContext, "sobot_notice_expand"));
+            imageView.setImageResource(ResourceUtils.getDrawableId(mContext, "sobot_icon_arrow_down"));
+            ViewGroup otherGroup = tv_exp.getmOtherView();
+            if (otherGroup != null) {
+                recyclerView = (RecyclerView) otherGroup.findViewById(ResourceUtils.getResId(context, "sobot_attachment_file_layout"));
+                GridLayoutManager gridlayoutmanager = new GridLayoutManager(context, 3);
+                recyclerView.addItemDecoration(new SpaceItemDecoration(ScreenUtils.dip2px(mContext, 10), ScreenUtils.dip2px(mContext, 10), 0, SpaceItemDecoration.GRIDLAYOUT));
+                recyclerView.setLayoutManager(gridlayoutmanager);
+            }
+
         }
 
         void bindData(Object item, int position) {
             SobotUserTicketInfo data = (SobotUserTicketInfo) item;
-            tv_content.setText(TextUtils.isEmpty(data.getContent()) ? "" : Html.fromHtml(data.getContent()));
+            if (data != null && !TextUtils.isEmpty(data.getContent())) {
+                String tempStr = data.getContent().replaceAll("<br/>", "").replace("<p></p>", "")
+                        .replaceAll("<p>", "").replaceAll("</p>", "<br/>").replaceAll("\n", "<br/>");
+                tv_exp.setText(TextUtils.isEmpty(data.getContent()) ? "" : Html.fromHtml(tempStr));
+                tv_exp.setHaveFile(data.getFileList() != null && data.getFileList().size() > 0);
+                int color = ResourceUtils.getResColorId(context, "sobot_color_custom_name");
+                recyclerView.setAdapter(new FileAttachmentAdapter(context, data.getFileList(), color, listener));
+            }
         }
     }
 

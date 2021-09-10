@@ -6,6 +6,12 @@ android {
     defaultConfig {
         minSdkVersion 14
     }
+
+sourceSets{
+        main(){
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {

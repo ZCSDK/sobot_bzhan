@@ -90,7 +90,10 @@ public class SobotTicketInfoFragment extends SobotBaseFragment {
     }
 
     public void initData() {
-        if (!isAdded() || TextUtils.isEmpty(mCustomerId)) {
+        if ("null".equals(mCustomerId)) {
+            mCustomerId = "";
+        }
+        if (!isAdded() || TextUtils.isEmpty(mCompanyId) || TextUtils.isEmpty(mUid)) {
             return;
         }
         zhiChiApi.getUserTicketInfoList(SobotTicketInfoFragment.this, mUid, mCompanyId, mCustomerId, new StringResultCallBack<List<SobotUserTicketInfo>>() {

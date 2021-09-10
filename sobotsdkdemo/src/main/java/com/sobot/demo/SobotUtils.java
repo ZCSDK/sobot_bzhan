@@ -29,48 +29,9 @@ public class SobotUtils {
 
         //设置用户自定义字段
         Information info = new Information();
-        Map<String, String> customerFields = new HashMap<>();
-        customerFields.put("weixin", "55555");
-        customerFields.put("weibo", "66666");
-        customerFields.put("userSex", "女");
-        customerFields.put("birthday", "2017-05-17");
-        customerFields.put("cardNo", "142201198704102222");
-        customerFields.put(SobotSPUtil.getStringData(context, "key1_value", ""), SobotSPUtil.getStringData(context, "value1_value", ""));
-        customerFields.put(SobotSPUtil.getStringData(context, "key2_value", ""), SobotSPUtil.getStringData(context, "value2_value", ""));
-        customerFields.put(SobotSPUtil.getStringData(context, "key3_value", ""), SobotSPUtil.getStringData(context, "value3_value", ""));
-
-        info.setUseRobotVoice(true);//这个属性默认都是false。想使用需要付费。付费才可以设置为true。
-        SobotSPUtil.getStringData(context, "sobot_key1", "");
-        SobotSPUtil.getStringData(context, "sobot_key2", "");
-        info.setUname(SobotSPUtil.getStringData(context, "person_uName", ""));
-        info.setRealname(SobotSPUtil.getStringData(context, "sobot_realname", ""));
-        info.setTel(SobotSPUtil.getStringData(context, "sobot_tel", ""));
-        info.setEmail(SobotSPUtil.getStringData(context, "sobot_email", ""));
-        info.setQq(SobotSPUtil.getStringData(context, "sobot_qq", ""));
-        info.setRemark(SobotSPUtil.getStringData(context, "sobot_reMark", ""));
-        info.setFace(SobotSPUtil.getStringData(context, "sobot_face", ""));
-        info.setVisitTitle(SobotSPUtil.getStringData(context, "sobot_visitTitle", ""));
-        info.setVisitUrl(SobotSPUtil.getStringData(context, "sobot_visitUrl", ""));
-        Map<String, String> customInfo = new HashMap<>();
-        customInfo.put("sobot_key1", SobotSPUtil.getStringData(context, "sobot_key1", ""));
-        customInfo.put("sobot_key2", SobotSPUtil.getStringData(context, "sobot_key2", ""));
-        info.setCustomInfo(customInfo);
         //用户信息设置结束
 
-        //咨询信息设置开始
-        boolean isShow = SobotSPUtil.getBooleanData(context, "sobot_goods_is_show_info", false);
-        if (isShow) {
-            ConsultingContent consult = new ConsultingContent();
-            consult.setSobotGoodsTitle(SobotSPUtil.getStringData(context, "sobot_goods_title_value", ""));
-            consult.setSobotGoodsDescribe(SobotSPUtil.getStringData(context, "sobot_goods_describe_value", ""));
-            consult.setSobotGoodsLable(SobotSPUtil.getStringData(context, "sobot_goods_lable_value", ""));
-            consult.setSobotGoodsImgUrl(SobotSPUtil.getStringData(context, "sobot_goods_imgUrl_value", ""));
-            consult.setSobotGoodsFromUrl(SobotSPUtil.getStringData(context, "sobot_goods_fromUrl_value", ""));
-            info.setConsultingContent(consult);
-        } else {
-            info.setConsultingContent(null);
-        }
-        //咨询信息设置结束
+
 
         //自定义应答设置开始
         SobotApi.setCustomAdminHelloWord(context, SobotSPUtil.getStringData(context, "sobot_customAdminHelloWord", ""));//自定义客服欢迎语,默认为空 （如果传入，优先使用该字段）
@@ -86,7 +47,6 @@ public class SobotUtils {
         info.setReceptionistId(SobotSPUtil.getStringData(context, "sobot_receptionistId", ""));
         info.setRobotCode(SobotSPUtil.getStringData(context, "sobot_demo_robot_code", ""));
         info.setTranReceptionistFlag(SobotSPUtil.getBooleanData(context, "sobot_receptionistId_must", false) ? 1 : 0);
-        info.setCustomerFields(customerFields);
         if (SobotSPUtil.getBooleanData(context, "sobot_isArtificialIntelligence", false)) {
             info.setArtificialIntelligence(true);
             if (!TextUtils.isEmpty(SobotSPUtil.getStringData(context, "sobot_isArtificialIntelligence_num_value", "")) && !"".equals(SobotSPUtil.getStringData(context, "sobot_isArtificialIntelligence_num_value", ""))) {

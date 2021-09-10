@@ -55,4 +55,11 @@
         <attr name="sobot_stroke_width" />
         <attr name="sobot_clip_background" />
     </declare-styleable>
+
+    <declare-styleable name="sobot_ExpandableTextView">
+        <attr name="maxCollapsedLines" format="integer" />
+        <attr name="ExpandStrResId" format="reference" />
+        <attr name="CollapseStrResId" format="reference" />
+
+    </declare-styleable>
 </resources>

@@ -143,6 +143,16 @@ public class SobotTicketDetailActivity extends SobotBaseActivity implements Sobo
             public void onSuccess(List<StUserDealTicketInfo> datas) {
                 if (datas != null && datas.size() > 0) {
                     mList.clear();
+                    for (StUserDealTicketInfo info : datas) {
+                        if (info.getFlag() == 1) {//创建
+                            mTicketInfo.setFileList(info.getFileList());
+                            mTicketInfo.setContent(info.getContent());
+                            if (StringUtils.isEmpty(mTicketInfo.getTimeStr())) {
+                                mTicketInfo.setTimeStr(info.getTimeStr());
+                            }
+                            break;
+                        }
+                    }
                     mList.add(mTicketInfo);
                     mList.addAll(datas);
                     if (mAdapter == null) {

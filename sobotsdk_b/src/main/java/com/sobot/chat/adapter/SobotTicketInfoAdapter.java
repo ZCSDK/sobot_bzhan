@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.sobot.chat.adapter.base.SobotBaseAdapter;
 import com.sobot.chat.api.model.SobotUserTicketInfo;
 import com.sobot.chat.utils.ResourceUtils;
+import com.sobot.chat.utils.ScreenUtils;
 
 import java.util.List;
 
@@ -127,6 +128,7 @@ public class SobotTicketInfoAdapter extends SobotBaseAdapter<SobotUserTicketInfo
 
         void bindData(SobotUserTicketInfo data) {
             tv_title.setText(TextUtils.isEmpty(data.getContent()) ? "" : Html.fromHtml(data.getContent()));
+            tv_title.setMaxWidth(ScreenUtils.getScreenWH(context)[0]*3/5+10);
             if (2 == data.getFlag()) {
                 tv_ticket_status.setText(str2_resId);
                 tv_ticket_status.setBackgroundResource(bg2_resId);
