@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -188,17 +189,19 @@ public class SelectPicPopupWindow extends PopupWindow {
 	}
 
 	// 最后通知图库更新
-	public void notifyUpdatePic(File file,String fileName){
-//		try {
-//			MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
+	public void notifyUpdatePic(File file, String fileName) {
+		try {
+			if (file != null && file.exists() && !TextUtils.isEmpty(fileName)) {
+				MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 		Uri uri = Uri.fromFile(file);
 		intent.setData(uri);
 		context.sendBroadcast(intent);
-		showHint(ResourceUtils.getResString(context,"sobot_already_save_to_picture"));
+		showHint(ResourceUtils.getResString(context, "sobot_already_save_to_picture"));
 	}
 
 	/**

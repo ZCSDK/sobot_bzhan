@@ -29,7 +29,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //以下三项必填
-    implementation project(':sobotsdk_b')
+//    implementation project(':sobotsdk_b')
 
 	//必须有
     implementation 'com.squareup.okhttp3:okhttp:4.4.0'
@@ -39,6 +39,7 @@ dependencies {
     // compile 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.sobot.chat:sobotsupport-glidev4:2.1'
+    implementation  'com.sobot.chat:sobotsdk-local:1.9.0'
 
 	//下面是demo所需要的
     implementation('com.lzy.widget:view-core:0.1.5') {

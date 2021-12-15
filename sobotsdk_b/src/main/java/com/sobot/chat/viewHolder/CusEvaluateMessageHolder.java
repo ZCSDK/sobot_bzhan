@@ -14,6 +14,7 @@ import com.sobot.chat.api.model.SobotEvaluateModel;
 import com.sobot.chat.api.model.ZhiChiMessageBase;
 import com.sobot.chat.utils.ChatUtils;
 import com.sobot.chat.utils.ResourceUtils;
+import com.sobot.chat.utils.SobotQuickClickCheck;
 import com.sobot.chat.viewHolder.base.MessageHolderBase;
 
 /**
@@ -54,6 +55,10 @@ public class CusEvaluateMessageHolder extends MessageHolderBase implements Radio
                 if (sobotEvaluateModel == null) {
                     return;
                 }
+                //防止快速点击
+                if (!SobotQuickClickCheck.isFastClick()) {
+                    return;
+                }
                 sobotEvaluateModel.setIsResolved(0);
                 doEvaluate(true);
             }
@@ -62,6 +67,10 @@ public class CusEvaluateMessageHolder extends MessageHolderBase implements Radio
             @Override
             public void onClick(View v) {
                 if (sobotEvaluateModel == null) {
+                    return;
+                }
+                //防止快速点击
+                if (!SobotQuickClickCheck.isFastClick()) {
                     return;
                 }
                 sobotEvaluateModel.setIsResolved(1);
