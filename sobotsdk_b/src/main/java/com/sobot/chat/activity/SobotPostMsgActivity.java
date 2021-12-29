@@ -20,6 +20,7 @@ import com.sobot.chat.fragment.SobotTicketInfoFragment;
 import com.sobot.chat.presenter.StPostMsgPresenter;
 import com.sobot.chat.utils.ZhiChiConstant;
 import com.sobot.chat.widget.PagerSlidingTab;
+import com.sobot.chat.widget.kpswitch.util.KeyboardUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +108,23 @@ public class SobotPostMsgActivity extends SobotBaseActivity implements View.OnCl
         }
         mAdapter = new StViewPagerAdapter(this, getSupportFragmentManager(), new String[]{"请您留言", "留言记录"}, mFragments);
         mViewPager.setAdapter(mAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (mViewPager!=null){
+                    KeyboardUtil.hideKeyboard(mViewPager);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         if ((mConfig != null && mConfig.isTicketShowFlag()) && !mIsShowTicket) {
             mLlCompleted.setVisibility(View.VISIBLE);
             mllContainer.setVisibility(View.VISIBLE);

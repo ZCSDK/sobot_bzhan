@@ -430,7 +430,7 @@ public class SobotTicketDetailActivity extends SobotBaseActivity implements Sobo
                         LogUtils.e(s);
                         CustomToast.makeText(SobotTicketDetailActivity.this, ResourceUtils.getResString(SobotTicketDetailActivity.this, "sobot_submit_success_tip"), 1000, ResourceUtils.getDrawableId(SobotTicketDetailActivity.this, "sobot_iv_login_right")).show();
                         try {
-                            Thread.sleep(500);//睡眠一秒  延迟拉取数据
+                            Thread.sleep(1500);//睡眠一秒  延迟拉取数据
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

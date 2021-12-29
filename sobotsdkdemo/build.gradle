@@ -39,7 +39,7 @@ dependencies {
     // compile 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.sobot.chat:sobotsupport-glidev4:2.1'
-    implementation  'com.sobot.chat:sobotsdk-local:1.9.0'
+    implementation  'com.sobot.chat:sobotsdk-local:1.9.2'
 
 	//下面是demo所需要的
     implementation('com.lzy.widget:view-core:0.1.5') {

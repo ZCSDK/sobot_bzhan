@@ -46,7 +46,7 @@ public class StExpandableTextView extends LinearLayout implements View.OnClickLi
 
     protected TextView mTv;
 
-    protected ViewGroup mButton; // Button to expand/collapse
+    protected View mButton; // Button to expand/collapse
     protected ImageView mImageView;//图片
     protected TextView mTextBtn;//文本
     protected ViewGroup mOtherView;
@@ -320,7 +320,7 @@ public class StExpandableTextView extends LinearLayout implements View.OnClickLi
     private void findViews() {
         mTv = (TextView) findViewById(ResourceUtils.getResId(getContext(), "expandable_text"));
 //        mTv.setOnClickListener(this);
-        mButton = (ViewGroup) findViewById(ResourceUtils.getResId(getContext(), "expand_collapse"));
+        mButton =  findViewById(ResourceUtils.getResId(getContext(), "expand_collapse"));
         mImageView = findViewById(ResourceUtils.getResId(getContext(), "expand_image"));
         mTextBtn = findViewById(ResourceUtils.getResId(getContext(), "expand_text_btn"));
 //        mButton.setImageDrawable(mCollapsed ? mExpandDrawable : mCollapseDrawable);
@@ -413,8 +413,10 @@ public class StExpandableTextView extends LinearLayout implements View.OnClickLi
 
     private void setupExpandCollapse() {
 //        setText(mTv.getText().toString());
-        mImageView.setSelected(!mCollapsed);
-        mImageView.setImageResource(mCollapsed ? mExpandStrResId : mCollapseStrResId);
+        if(mImageView!=null){
+            mImageView.setSelected(!mCollapsed);
+            mImageView.setImageResource(mCollapsed ? mExpandStrResId : mCollapseStrResId);
+        }
         if (mOtherView!=null) {
             mOtherView.setVisibility(mCollapsed ? GONE : VISIBLE);
         }

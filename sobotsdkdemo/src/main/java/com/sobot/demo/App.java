@@ -15,10 +15,10 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        SobotBaseUrl.setHost("https://new-service.biliapi.net");
-        SobotBaseUrl.setHost("https://test-service.biliapi.net");
+        SobotBaseUrl.setHost("https://new-service.biliapi.net");
+//        SobotBaseUrl.setHost("https://test-service.biliapi.net");
 
-        String appkey="a683f49da89e457ea86a09b663a74c0e";
+        String appkey="032c4d11e699489ba8bab0cbda3c411e";
         SobotApi.initSobotSDK(this, appkey, SobotSPUtil.getStringData(this, "sobot_partnerId", ""));
         LogUtils.isDebug=true;
         LogUtils.allowI=true;
